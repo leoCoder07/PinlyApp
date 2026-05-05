@@ -1,0 +1,61 @@
+<ScrollView
+    style={styles.scrollView}
+    contentContainerStyle={styles.gridContainer}
+    showsVerticalScrollIndicator={false}
+   >
+    <View style={styles.row}>
+     {/* Left Column */}
+     <View style={styles.column}>
+      {MOCK_IMAGES.filter((_, i) => i % 2 === 0).map((image) => (
+       <TouchableOpacity
+        key={image.id}
+        style={styles.imageCard}
+        onPress={() => openImageDetail(image)}
+        activeOpacity={0.9}
+       >
+        <Image
+         source={{uri: image.url}}
+         style={styles.image}
+         resizeMode="cover"
+        />
+        <View style={styles.imageOverlay}>
+         <Text style={styles.imageTitle} numberOfLines={1}>
+          {image.title}
+         </Text>
+         <View style={styles.imageMeta}>
+          <Ionicons name="heart-outline" size={14} color="#FFF" />
+          <Text style={styles.imageLikes}>{image.likes}</Text>
+         </View>
+        </View>
+       </TouchableOpacity>
+      ))}
+     </View>
+
+     {/* Right Column */}
+     <View style={styles.column}>
+      {MOCK_IMAGES.filter((_, i) => i % 2 !== 0).map((image) => (
+       <TouchableOpacity
+        key={image.id}
+        style={styles.imageCard}
+        onPress={() => openImageDetail(image)}
+        activeOpacity={0.9}
+       >
+        <Image
+         source={{uri: image.url}}
+         style={styles.image}
+         resizeMode="cover"
+        />
+        <View style={styles.imageOverlay}>
+         <Text style={styles.imageTitle} numberOfLines={1}>
+          {image.title}
+         </Text>
+         <View style={styles.imageMeta}>
+          <Ionicons name="heart-outline" size={14} color="#FFF" />
+          <Text style={styles.imageLikes}>{image.likes}</Text>
+         </View>
+        </View>
+       </TouchableOpacity>
+      ))}
+     </View>
+    </View>
+   </ScrollView>
