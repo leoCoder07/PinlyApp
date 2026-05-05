@@ -1,5 +1,6 @@
 import { Ionicons } from "@expo/vector-icons";
 import * as ImagePicker from "expo-image-picker";
+import { router } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
  Alert,
@@ -20,7 +21,6 @@ import {
 } from "react-native";
 import Sidebar from "../../components/sidebar";
 
-// 🎨 Board options (same as boards tab)
 const BOARD_OPTIONS = [
  {
   id: "home-decor",
@@ -63,7 +63,6 @@ const BOARD_OPTIONS = [
 ];
 
 export default function CreateScreen() {
- // ===== STATE =====
  const [sidebarVisible, setSidebarVisible] = useState(false);
  const [selectedImage, setSelectedImage] =
   useState<ImagePicker.ImagePickerAsset | null>(null);
@@ -73,7 +72,6 @@ export default function CreateScreen() {
  const [showBoardPicker, setShowBoardPicker] = useState(false);
  const sidebarAnimation = useRef(new Animated.Value(-300)).current;
 
- // ===== SIDEBAR =====
  const toggleSidebar = () => {
   if (sidebarVisible) {
    Animated.timing(sidebarAnimation, {
@@ -91,9 +89,7 @@ export default function CreateScreen() {
   }
  };
 
- // ===== IMAGE PICKER =====
  const pickImage = async () => {
-  // Ask for permission
   const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
 
   if (status !== "granted") {
@@ -105,7 +101,6 @@ export default function CreateScreen() {
    return;
   }
 
-  // Open image picker
   const result = await ImagePicker.launchImageLibraryAsync({
    mediaTypes: ImagePicker.MediaTypeOptions.Images,
    allowsEditing: true,
@@ -118,7 +113,6 @@ export default function CreateScreen() {
   }
  };
 
- // ===== REMOVE SELECTED IMAGE =====
  const removeImage = () => {
   Alert.alert("Remove Image", "Are you sure you want to remove this image?", [
    {text: "Cancel", style: "cancel"},
@@ -130,9 +124,7 @@ export default function CreateScreen() {
   ]);
  };
 
- // ===== UPLOAD HANDLER (Placeholder) =====
  const handleUpload = () => {
-  // Validation
   if (!selectedImage) {
    Alert.alert("Missing Image", "Please select an image to upload.");
    return;
@@ -148,7 +140,6 @@ export default function CreateScreen() {
 
   const boardData = getSelectedBoardData();
 
-  // For now, just show success (backend later)
   Alert.alert(
    "Ready to Upload! 🎉",
    `Title: ${title}\nBoard: ${boardData?.label}\nDescription: ${description || "None"}`,
@@ -156,9 +147,8 @@ export default function CreateScreen() {
     {
      text: "Upload",
      onPress: () => {
-      // TODO: Backend upload logic here
       Alert.alert("Success!", "Your image has been uploaded.");
-      // Reset form
+
       setSelectedImage(null);
       setSelectedBoard(null);
       setTitle("");
@@ -170,7 +160,6 @@ export default function CreateScreen() {
   );
  };
 
- // ===== GET SELECTED BOARD INFO =====
  const getSelectedBoardData = () => {
   if (!selectedBoard) return null;
   return BOARD_OPTIONS.find((b) => b.id === selectedBoard);
@@ -180,7 +169,7 @@ export default function CreateScreen() {
   <SafeAreaView style={styles.container}>
    <StatusBar barStyle="dark-content" backgroundColor="#fefae0" />
 
-   {/* ============ HEADER ============ */}
+   {}
    <View style={styles.header}>
     <TouchableOpacity onPress={toggleSidebar} style={styles.burgerButton}>
      <Ionicons name="menu-outline" size={28} color="#3a5a40" />
@@ -188,12 +177,15 @@ export default function CreateScreen() {
 
     <Text style={styles.headerTitle}>Create</Text>
 
-    <TouchableOpacity style={styles.notificationButton}>
+    <TouchableOpacity
+     style={styles.notificationButton}
+     onPress={() => router.push("/notifications")}
+    >
      <Ionicons name="notifications-outline" size={24} color="#3a5a40" />
     </TouchableOpacity>
    </View>
 
-   {/* ============ FORM ============ */}
+   {}
    <KeyboardAvoidingView
     behavior={Platform.OS === "ios" ? "padding" : "height"}
     style={styles.keyboardView}
@@ -204,8 +196,10 @@ export default function CreateScreen() {
      showsVerticalScrollIndicator={false}
      keyboardShouldPersistTaps="handled"
     >
-     {/* ===== IMAGE PICKER BOX ===== */}
-     <Text style={styles.sectionLabel}>Image</Text>
+     {}
+     <Text style={styles.sectionLabel}>
+      Image <Text style={styles.required}>*</Text>
+     </Text>
      {!selectedImage ? (
       <TouchableOpacity
        style={styles.imagePickerBox}
@@ -235,7 +229,7 @@ export default function CreateScreen() {
       </View>
      )}
 
-     {/* ===== BOARD SELECTOR ===== */}
+     {}
      <Text style={styles.sectionLabel}>
       Select Board <Text style={styles.required}>*</Text>
      </Text>
@@ -276,7 +270,7 @@ export default function CreateScreen() {
       <Ionicons name="chevron-down" size={20} color="#999" />
      </TouchableOpacity>
 
-     {/* ===== TITLE INPUT ===== */}
+     {}
      <Text style={styles.sectionLabel}>
       Title <Text style={styles.required}>*</Text>
      </Text>
@@ -298,7 +292,7 @@ export default function CreateScreen() {
      </View>
      <Text style={styles.charCount}>{title.length}/100</Text>
 
-     {/* ===== DESCRIPTION INPUT ===== */}
+     {}
      <Text style={styles.sectionLabel}>
       Description <Text style={styles.optionalTag}>(optional)</Text>
      </Text>
@@ -323,7 +317,7 @@ export default function CreateScreen() {
      </View>
      <Text style={styles.charCount}>{description.length}/500</Text>
 
-     {/* ===== UPLOAD BUTTON ===== */}
+     {}
      <TouchableOpacity
       style={[
        styles.uploadButton,
@@ -342,7 +336,7 @@ export default function CreateScreen() {
     </ScrollView>
    </KeyboardAvoidingView>
 
-   {/* ============ BOARD PICKER MODAL ============ */}
+   {}
    <Modal
     visible={showBoardPicker}
     animationType="slide"
@@ -351,7 +345,7 @@ export default function CreateScreen() {
    >
     <View style={styles.modalOverlay}>
      <View style={styles.modalContent}>
-      {/* Modal Header */}
+      {}
       <View style={styles.modalHeader}>
        <Text style={styles.modalTitle}>Select a Board</Text>
        <TouchableOpacity
@@ -362,7 +356,7 @@ export default function CreateScreen() {
        </TouchableOpacity>
       </View>
 
-      {/* Board Options List */}
+      {}
       <FlatList
        data={BOARD_OPTIONS}
        keyExtractor={(item) => item.id}
@@ -392,7 +386,7 @@ export default function CreateScreen() {
     </View>
    </Modal>
 
-   {/* ============ SIDEBAR OVERLAY ============ */}
+   {}
    {sidebarVisible && (
     <TouchableOpacity
      style={styles.overlay}
@@ -424,7 +418,6 @@ const styles = StyleSheet.create({
   flex: 1,
  },
 
- // ============ HEADER ============
  header: {
   flexDirection: "row",
   alignItems: "center",
@@ -468,7 +461,6 @@ const styles = StyleSheet.create({
   elevation: 2,
  },
 
- // ============ SCROLL ============
  scrollView: {
   flex: 1,
  },
@@ -477,7 +469,6 @@ const styles = StyleSheet.create({
   paddingTop: 20,
  },
 
- // ============ SECTION LABELS ============
  sectionLabel: {
   fontSize: 15,
   fontWeight: "600",
@@ -495,7 +486,6 @@ const styles = StyleSheet.create({
   fontSize: 13,
  },
 
- // ============ IMAGE PICKER ============
  imagePickerBox: {
   backgroundColor: "#FFFFFF",
   borderRadius: 16,
@@ -527,7 +517,6 @@ const styles = StyleSheet.create({
   color: "#999",
  },
 
- // ============ IMAGE PREVIEW ============
  imagePreviewContainer: {
   borderRadius: 16,
   overflow: "hidden",
@@ -565,7 +554,6 @@ const styles = StyleSheet.create({
   color: "#3a5a40",
  },
 
- // ============ BOARD SELECTOR ============
  boardSelector: {
   flexDirection: "row",
   alignItems: "center",
@@ -601,7 +589,6 @@ const styles = StyleSheet.create({
   color: "#999",
  },
 
- // ============ INPUT FIELDS ============
  inputContainer: {
   flexDirection: "row",
   alignItems: "center",
@@ -622,7 +609,6 @@ const styles = StyleSheet.create({
   color: "#333",
  },
 
- // ============ TEXT AREA ============
  textAreaContainer: {
   flexDirection: "row",
   alignItems: "flex-start",
@@ -643,7 +629,6 @@ const styles = StyleSheet.create({
   paddingTop: 0,
  },
 
- // ============ CHAR COUNT ============
  charCount: {
   fontSize: 12,
   color: "#BBB",
@@ -652,7 +637,6 @@ const styles = StyleSheet.create({
   marginRight: 4,
  },
 
- // ============ UPLOAD BUTTON ============
  uploadButton: {
   flexDirection: "row",
   alignItems: "center",
@@ -680,7 +664,6 @@ const styles = StyleSheet.create({
   letterSpacing: 0.5,
  },
 
- // ============ BOARD PICKER MODAL ============
  modalOverlay: {
   flex: 1,
   backgroundColor: "rgba(0, 0, 0, 0.5)",
@@ -741,7 +724,6 @@ const styles = StyleSheet.create({
   color: "#333",
  },
 
- // ============ SIDEBAR ============
  overlay: {
   position: "absolute",
   top: 0,

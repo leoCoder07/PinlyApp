@@ -22,7 +22,6 @@ export default function ResetPasswordScreen() {
  const [loading, setLoading] = useState(false);
  const [hasSession, setHasSession] = useState(false);
 
- // Check if user has an active session (from email link or dashboard reset)
  useEffect(() => {
   checkSession();
  }, []);
@@ -80,7 +79,6 @@ export default function ResetPasswordScreen() {
   }
  }
 
- // If no session, show helpful message
  if (!hasSession) {
   return (
    <SafeAreaView style={styles.container}>
@@ -111,16 +109,16 @@ export default function ResetPasswordScreen() {
     style={styles.keyboardView}
    >
     <View style={styles.content}>
-     {/* Lock Icon */}
+     {}
      <View style={styles.iconContainer}>
       <Ionicons name="shield-checkmark-outline" size={60} color="#3a5a40" />
      </View>
 
-     {/* Title */}
+     {}
      <Text style={styles.title}>Reset Password</Text>
      <Text style={styles.subtitle}>Enter your new password below.</Text>
 
-     {/* New Password */}
+     {}
      <View style={styles.inputContainer}>
       <Ionicons
        name="lock-closed-outline"
@@ -138,7 +136,7 @@ export default function ResetPasswordScreen() {
       />
      </View>
 
-     {/* Confirm Password */}
+     {}
      <View style={styles.inputContainer}>
       <Ionicons
        name="lock-closed-outline"
@@ -163,7 +161,7 @@ export default function ResetPasswordScreen() {
       </TouchableOpacity>
      </View>
 
-     {/* Update Button */}
+     {}
      <TouchableOpacity
       style={[styles.button, loading && styles.buttonDisabled]}
       onPress={handleUpdatePassword}

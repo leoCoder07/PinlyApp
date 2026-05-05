@@ -3,6 +3,7 @@ import { router } from "expo-router";
 import React from "react";
 import {
  Alert,
+ Image,
  SafeAreaView,
  StyleSheet,
  Text,
@@ -31,47 +32,59 @@ export default function Sidebar({onClose}: SidebarProps) {
 
  return (
   <SafeAreaView style={styles.container}>
-   {/* ===== PROFILE SECTION ===== */}
+   {}
    <View style={styles.profileSection}>
-    <View style={styles.profileRow}>
-     {/* Profile Picture Placeholder */}
-     <View style={styles.profilePicture}>
-      <Ionicons name="person" size={30} color="#999" />
+    <TouchableOpacity
+     style={styles.profileRow}
+     onPress={() => {
+      onClose();
+      router.push("/profile");
+     }}
+     activeOpacity={0.7}
+    >
+     <View style={styles.profilePictureContainer}>
+      <Image
+       source={{
+        uri: "https://i.pinimg.com/736x/20/d6/8c/20d68c7eecc4dd007a7741cdc4eee97d.jpg",
+       }}
+       style={styles.profilePicture}
+      />
      </View>
 
-     {/* Username */}
+     {}
      <View style={styles.profileInfo}>
-      <Text style={styles.username}>Username</Text>
+      <Text style={styles.username}>April Anne</Text>
       <Text style={styles.viewProfile}>View Profile</Text>
      </View>
-
-     {/* Settings Button */}
-     <TouchableOpacity style={styles.settingsButton}>
-      <Ionicons name="settings-outline" size={22} color="#3a5a40" />
-     </TouchableOpacity>
-    </View>
+    </TouchableOpacity>
    </View>
 
-   {/* ===== DIVIDER ===== */}
+   {}
    <View style={styles.divider} />
 
-   {/* ===== MENU ITEMS ===== */}
+   {}
    <View style={styles.insideContainer}>
     <View style={styles.menuSection}>
-     <TouchableOpacity style={styles.menuItem} onPress={onClose}>
+     <TouchableOpacity
+      style={styles.menuItem}
+      onPress={() => router.push("/faqs")}
+     >
       <Ionicons name="help-circle-outline" size={22} color="#3a5a40" />
       <Text style={styles.menuText}>FAQ's</Text>
      </TouchableOpacity>
 
-     <TouchableOpacity style={styles.menuItem} onPress={onClose}>
+     <TouchableOpacity
+      style={styles.menuItem}
+      onPress={() => router.push("/about")}
+     >
       <Ionicons name="information-circle-outline" size={22} color="#3a5a40" />
       <Text style={styles.menuText}>About</Text>
      </TouchableOpacity>
     </View>
 
-    {/* ===== SPACER ===== */}
+    {}
 
-    {/* ===== LOGOUT BUTTON ===== */}
+    {}
     <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
      <Ionicons name="log-out-outline" size={22} color="#E74C3C" />
      <Text style={styles.logoutText}>Log Out</Text>
@@ -86,7 +99,6 @@ const styles = StyleSheet.create({
   backgroundColor: "#FFFFFF",
  },
 
- // Profile Section
  profileSection: {
   paddingHorizontal: 20,
   paddingTop: 10,
@@ -96,13 +108,11 @@ const styles = StyleSheet.create({
   flexDirection: "row",
   alignItems: "center",
  },
+ profilePictureContainer: {},
  profilePicture: {
   width: 50,
   height: 50,
   borderRadius: 25,
-  backgroundColor: "#F0F0F0",
-  justifyContent: "center",
-  alignItems: "center",
   borderWidth: 2,
   borderColor: "#3a5a40",
  },
@@ -120,16 +130,7 @@ const styles = StyleSheet.create({
   color: "#3a5a40",
   marginTop: 2,
  },
- settingsButton: {
-  width: 36,
-  height: 36,
-  borderRadius: 18,
-  backgroundColor: "#F5F5F5",
-  justifyContent: "center",
-  alignItems: "center",
- },
 
- // Divider
  divider: {
   height: 1,
   backgroundColor: "#E8E8E8",
@@ -141,7 +142,6 @@ const styles = StyleSheet.create({
   justifyContent: "space-between",
  },
 
- // Menu Items
  menuSection: {
   paddingHorizontal: 12,
   paddingTop: 16,
@@ -161,7 +161,6 @@ const styles = StyleSheet.create({
   fontWeight: "500",
  },
 
- // Logout
  logoutButton: {
   flexDirection: "row",
   alignItems: "center",

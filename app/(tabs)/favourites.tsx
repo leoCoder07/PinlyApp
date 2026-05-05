@@ -21,7 +21,6 @@ const {width} = Dimensions.get("window");
 const CARD_GAP = 12;
 const CARD_WIDTH = (width - 48 - CARD_GAP) / 2;
 
-// 🎨 Board data
 const BOARD_INFO: Record<string, {label: string; icon: string; color: string}> =
  {
   "home-decor": {label: "Home Decor", icon: "home-outline", color: "#E8D5B7"},
@@ -46,7 +45,6 @@ const BOARD_INFO: Record<string, {label: string; icon: string; color: string}> =
   products: {label: "Products", icon: "bag-outline", color: "#B7E8E8"},
  };
 
-// 🖼️ Type for favorited image
 interface FavoriteImage {
  id: string;
  url: string;
@@ -57,7 +55,6 @@ interface FavoriteImage {
  boardId: string;
 }
 
-// 📦 Mock favorites
 const MOCK_FAVORITES: FavoriteImage[] = [
  {
   id: "fav1",
@@ -129,16 +126,13 @@ export default function FavoritesScreen() {
  const [sidebarVisible, setSidebarVisible] = useState(false);
  const [favorites, setFavorites] = useState<FavoriteImage[]>(MOCK_FAVORITES);
 
- // 👈 New: Track which board is being viewed in detail
  const [selectedBoard, setSelectedBoard] = useState<string | null>(null);
 
- // Image modal state
  const [selectedImage, setSelectedImage] = useState<FavoriteImage | null>(null);
  const [modalVisible, setModalVisible] = useState(false);
 
  const sidebarAnimation = useRef(new Animated.Value(-300)).current;
 
- // 🎯 Toggle sidebar
  const toggleSidebar = () => {
   if (sidebarVisible) {
    Animated.timing(sidebarAnimation, {
@@ -156,23 +150,19 @@ export default function FavoritesScreen() {
   }
  };
 
- // 🖼️ Open image detail modal
  const openImageDetail = (image: FavoriteImage) => {
   setSelectedImage(image);
   setModalVisible(true);
  };
 
- // ❤️ Remove from favorites
  const removeFromFavorites = (imageId: string) => {
   setFavorites((prev) => prev.filter((item) => item.id !== imageId));
  };
 
- // 👉 Navigate to home
  const goToHome = () => {
   router.push("/(tabs)/home");
  };
 
- // 📊 Group favorites by board
  const groupedFavorites = favorites.reduce<Record<string, FavoriteImage[]>>(
   (acc, item) => {
    if (!acc[item.boardId]) {
@@ -184,12 +174,10 @@ export default function FavoritesScreen() {
   {},
  );
 
- // 🔙 Go back to boards list view
  const goBackToBoards = () => {
   setSelectedBoard(null);
  };
 
- // Get images for the selected board detail view
  const getBoardFavorites = (boardId: string) => {
   return groupedFavorites[boardId] || [];
  };
@@ -200,15 +188,13 @@ export default function FavoritesScreen() {
   <SafeAreaView style={styles.container}>
    <StatusBar barStyle="dark-content" backgroundColor="#fefae0" />
 
-   {/* ============ HEADER ============ */}
+   {}
    <View style={styles.header}>
     {selectedBoard ? (
-     // Back button when viewing board detail
      <TouchableOpacity onPress={goBackToBoards} style={styles.burgerButton}>
       <Ionicons name="arrow-back" size={24} color="#3a5a40" />
      </TouchableOpacity>
     ) : (
-     // Burger button when on main favorites view
      <TouchableOpacity onPress={toggleSidebar} style={styles.burgerButton}>
       <Ionicons name="menu-outline" size={28} color="#3a5a40" />
      </TouchableOpacity>
@@ -218,14 +204,16 @@ export default function FavoritesScreen() {
      {selectedBoard ? BOARD_INFO[selectedBoard]?.label || "Board" : "Favorites"}
     </Text>
 
-    <TouchableOpacity style={styles.notificationButton}>
+    <TouchableOpacity
+     style={styles.notificationButton}
+     onPress={() => router.push("/notifications")}
+    >
      <Ionicons name="notifications-outline" size={24} color="#3a5a40" />
     </TouchableOpacity>
    </View>
 
-   {/* ============ CONTENT ============ */}
+   {}
    {!hasFavorites ? (
-    // ===== EMPTY STATE =====
     <View style={styles.emptyContainer}>
      <View style={styles.emptyIconContainer}>
       <Ionicons name="heart-outline" size={64} color="#CCC" />
@@ -244,13 +232,12 @@ export default function FavoritesScreen() {
      </TouchableOpacity>
     </View>
    ) : selectedBoard ? (
-    // ===== BOARD DETAIL VIEW (All favorites in one board) =====
     <ScrollView
      style={styles.scrollView}
      contentContainerStyle={styles.detailScrollContent}
      showsVerticalScrollIndicator={false}
     >
-     {/* Board header info */}
+     {}
      <View style={styles.boardDetailHeader}>
       <View
        style={[
@@ -273,9 +260,9 @@ export default function FavoritesScreen() {
       </Text>
      </View>
 
-     {/* Image Grid - 2 columns */}
+     {}
      <View style={styles.imageGrid}>
-      {/* Left Column */}
+      {}
       <View style={styles.column}>
        {getBoardFavorites(selectedBoard)
         .filter((_, i) => i % 2 === 0)
@@ -291,7 +278,7 @@ export default function FavoritesScreen() {
            style={styles.cardImage}
            resizeMode="cover"
           />
-          {/* Heart icon */}
+          {}
           <View style={styles.heartBadge}>
            <Ionicons name="heart" size={14} color="#E74C3C" />
           </View>
@@ -304,7 +291,7 @@ export default function FavoritesScreen() {
         ))}
       </View>
 
-      {/* Right Column */}
+      {}
       <View style={styles.column}>
        {getBoardFavorites(selectedBoard)
         .filter((_, i) => i % 2 !== 0)
@@ -334,7 +321,6 @@ export default function FavoritesScreen() {
      </View>
     </ScrollView>
    ) : (
-    // ===== MAIN FAVORITES VIEW (Board boxes with one preview image) =====
     <ScrollView
      style={styles.scrollView}
      contentContainerStyle={styles.scrollContent}
@@ -344,7 +330,6 @@ export default function FavoritesScreen() {
       const board = BOARD_INFO[boardId];
       if (!board || images.length === 0) return null;
 
-      // Get the first image as preview
       const previewImage = images[0];
 
       return (
@@ -354,7 +339,7 @@ export default function FavoritesScreen() {
         onPress={() => setSelectedBoard(boardId)}
         activeOpacity={0.9}
        >
-        {/* Board Header */}
+        {}
         <View style={styles.boardBoxHeader}>
          <View style={[styles.boardIcon, {backgroundColor: board.color}]}>
           <Ionicons name={board.icon as any} size={18} color="#3a5a40" />
@@ -365,21 +350,26 @@ export default function FavoritesScreen() {
            {images.length} {images.length === 1 ? "item" : "items"}
           </Text>
          </View>
-         <Ionicons name="chevron-forward" size={20} color="#CCC" />
+         <Ionicons
+          name="chevron-forward"
+          size={20}
+          color="#CCC"
+          style={styles.chevronForward}
+         />
         </View>
 
-        {/* Preview Image (single image) */}
+        {}
         <View style={styles.previewImageContainer}>
          <Image
           source={{uri: previewImage.url}}
           style={styles.previewImage}
           resizeMode="cover"
          />
-         {/* Heart badge */}
+         {}
          <View style={styles.previewHeartBadge}>
           <Ionicons name="heart" size={16} color="#E74C3C" />
          </View>
-         {/* Image title overlay */}
+         {}
          <View style={styles.previewOverlay}>
           <Text style={styles.previewTitle} numberOfLines={1}>
            {previewImage.title}
@@ -395,7 +385,7 @@ export default function FavoritesScreen() {
     </ScrollView>
    )}
 
-   {/* ============ IMAGE DETAIL MODAL ============ */}
+   {}
    <Modal
     visible={modalVisible}
     animationType="slide"
@@ -412,7 +402,7 @@ export default function FavoritesScreen() {
     )}
    </Modal>
 
-   {/* ============ SIDEBAR OVERLAY ============ */}
+   {}
    {sidebarVisible && (
     <TouchableOpacity
      style={styles.overlay}
@@ -441,7 +431,6 @@ const styles = StyleSheet.create({
   backgroundColor: "#fefae0",
  },
 
- // ============ HEADER ============
  header: {
   flexDirection: "row",
   alignItems: "center",
@@ -485,7 +474,6 @@ const styles = StyleSheet.create({
   elevation: 2,
  },
 
- // ============ SCROLL ============
  scrollView: {
   flex: 1,
  },
@@ -499,7 +487,6 @@ const styles = StyleSheet.create({
   paddingBottom: 30,
  },
 
- // ============ EMPTY STATE ============
  emptyContainer: {
   flex: 1,
   justifyContent: "center",
@@ -552,9 +539,11 @@ const styles = StyleSheet.create({
   letterSpacing: 0.5,
  },
 
- // ============ BOARD BOX (Main View) ============
  boardBox: {
-  backgroundColor: "#FFFFFF",
+  backgroundColor: "#fae0e4",
+  padding: 5,
+  borderWidth: 1,
+  borderColor: "#ff99ac",
   borderRadius: 16,
   marginBottom: 16,
   shadowColor: "#000",
@@ -588,11 +577,10 @@ const styles = StyleSheet.create({
  },
  boardBoxCount: {
   fontSize: 12,
-  color: "#999",
+  color: "#800f2f",
   marginTop: 1,
  },
 
- // ============ PREVIEW IMAGE (Main View) ============
  previewImageContainer: {
   position: "relative",
   marginHorizontal: 4,
@@ -635,8 +623,9 @@ const styles = StyleSheet.create({
   fontSize: 12,
   color: "#CCC",
  },
-
- // ============ BOARD DETAIL VIEW ============
+ chevronForward: {
+  color: "#800f2f",
+ },
  boardDetailHeader: {
   alignItems: "center",
   paddingVertical: 20,
@@ -661,7 +650,6 @@ const styles = StyleSheet.create({
   color: "#888",
  },
 
- // ============ IMAGE GRID (Detail View) ============
  imageGrid: {
   flexDirection: "row",
   gap: CARD_GAP,
@@ -712,7 +700,6 @@ const styles = StyleSheet.create({
   color: "#FFF",
  },
 
- // ============ SIDEBAR ============
  overlay: {
   position: "absolute",
   top: 0,

@@ -1,5 +1,6 @@
 import Sidebar from "@/components/sidebar";
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
  Animated,
@@ -23,7 +24,6 @@ const STATUSBAR_HEIGHT =
 
 const {width} = Dimensions.get("window");
 
-// 👇 Type definition
 interface ImageItem {
  id: string;
  url: string;
@@ -87,7 +87,7 @@ const MOCK_IMAGES: ImageItem[] = [
 export default function HomeScreen() {
  const [sidebarVisible, setSidebarVisible] = useState(false);
  const [searchQuery, setSearchQuery] = useState("");
- const [selectedImage, setSelectedImage] = useState<ImageItem | null>(null); // 👈 ONLY ONCE here
+ const [selectedImage, setSelectedImage] = useState<ImageItem | null>(null);
  const [modalVisible, setModalVisible] = useState(false);
  const sidebarAnimation = useRef(new Animated.Value(-300)).current;
 
@@ -121,18 +121,21 @@ export default function HomeScreen() {
     translucent={false}
    />
 
-   {/* ============ HEADER ============ */}
+   {}
    <View style={styles.header}>
     <TouchableOpacity onPress={toggleSidebar} style={styles.burgerButton}>
      <Ionicons name="menu-outline" size={28} color="#3a5a40" />
     </TouchableOpacity>
     <Text style={styles.headerTitle}>Discover</Text>
-    <TouchableOpacity style={styles.notificationButton}>
+    <TouchableOpacity
+     style={styles.notificationButton}
+     onPress={() => router.push("/notifications")}
+    >
      <Ionicons name="notifications-outline" size={24} color="#3a5a40" />
     </TouchableOpacity>
    </View>
 
-   {/* ============ SEARCH BAR ============ */}
+   {}
    <View style={styles.searchContainer}>
     <View style={styles.searchBar}>
      <Ionicons
@@ -158,14 +161,14 @@ export default function HomeScreen() {
     </View>
    </View>
 
-   {/* ============ IMAGE GRID ============ */}
+   {}
    <ScrollView
     style={styles.scrollView}
     contentContainerStyle={styles.gridContainer}
     showsVerticalScrollIndicator={false}
    >
     <View style={styles.row}>
-     {/* Left Column */}
+     {}
      <View style={styles.column}>
       {MOCK_IMAGES.filter((_, i) => i % 2 === 0).map((image) => (
        <TouchableOpacity
@@ -192,7 +195,7 @@ export default function HomeScreen() {
       ))}
      </View>
 
-     {/* Right Column */}
+     {}
      <View style={styles.column}>
       {MOCK_IMAGES.filter((_, i) => i % 2 !== 0).map((image) => (
        <TouchableOpacity
@@ -221,7 +224,7 @@ export default function HomeScreen() {
     </View>
    </ScrollView>
 
-   {/* ============ IMAGE DETAIL MODAL ============ */}
+   {}
    <Modal
     visible={modalVisible}
     animationType="slide"
@@ -261,7 +264,6 @@ const styles = StyleSheet.create({
   backgroundColor: "#fefae0",
  },
 
- // ============ HEADER ============
  header: {
   flexDirection: "row",
   alignItems: "center",
@@ -271,7 +273,6 @@ const styles = StyleSheet.create({
   backgroundColor: "#fefae0",
   borderBottomWidth: 1,
   borderBottomColor: "#E8E8E8",
-  height: 90,
  },
  burgerButton: {
   width: 40,
@@ -306,7 +307,6 @@ const styles = StyleSheet.create({
   elevation: 2,
  },
 
- // ============ SEARCH BAR ============
  searchContainer: {
   paddingHorizontal: 16,
   paddingVertical: 10,
@@ -337,7 +337,6 @@ const styles = StyleSheet.create({
   paddingVertical: 0,
  },
 
- // ============ IMAGE GRID ============
  scrollView: {
   flex: 1,
  },
@@ -365,7 +364,7 @@ const styles = StyleSheet.create({
  },
  image: {
   width: "100%",
-  aspectRatio: 1, // 👈 Square images (width = height)
+  aspectRatio: 1,
   backgroundColor: "#E0E0E0",
  },
  imageOverlay: {
@@ -393,7 +392,6 @@ const styles = StyleSheet.create({
   color: "#FFFFFF",
  },
 
- // ============ SIDEBAR ============
  overlay: {
   position: "absolute",
   top: 0,

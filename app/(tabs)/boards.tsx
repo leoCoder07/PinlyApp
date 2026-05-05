@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { router } from "expo-router";
 import React, { useRef, useState } from "react";
 import {
  Animated,
@@ -20,7 +21,6 @@ const {width} = Dimensions.get("window");
 const CARD_WIDTH = width - 32;
 const PREVIEW_SIZE = (CARD_WIDTH - 48) / 4;
 
-// 📝 Type Definitions
 interface Board {
  id: string;
  title: string;
@@ -40,7 +40,6 @@ interface ImageItem {
  likes: number;
 }
 
-// 🎨 Board Categories
 const BOARDS: Board[] = [
  {
   id: "home-decor",
@@ -156,7 +155,6 @@ const BOARDS: Board[] = [
  },
 ];
 
-// 🖼️ Mock images for each board
 const BOARD_IMAGES_MOCK: Record<string, ImageItem[]> = {
  "home-decor": [
   {
@@ -343,7 +341,6 @@ export default function BoardsScreen() {
  const [modalVisible, setModalVisible] = useState(false);
  const sidebarAnimation = useRef(new Animated.Value(-300)).current;
 
- // 🎯 Toggle sidebar
  const toggleSidebar = (): void => {
   if (sidebarVisible) {
    Animated.timing(sidebarAnimation, {
@@ -361,23 +358,19 @@ export default function BoardsScreen() {
   }
  };
 
- // 🖼️ Open a board
  const openBoard = (board: Board): void => {
   setSelectedBoard(board);
  };
 
- // 🔙 Go back to boards list
  const goBackToBoards = (): void => {
   setSelectedBoard(null);
  };
 
- // 🖼️ Open image detail modal
  const openImageDetail = (image: ImageItem): void => {
   setSelectedImage(image);
   setModalVisible(true);
  };
 
- // Get images for the selected board
  const getBoardImages = (boardId: string): ImageItem[] => {
   return BOARD_IMAGES_MOCK[boardId] || [];
  };
@@ -386,7 +379,7 @@ export default function BoardsScreen() {
   <SafeAreaView style={styles.container}>
    <StatusBar barStyle="dark-content" backgroundColor="#fefae0" />
 
-   {/* ============ HEADER ============ */}
+   {}
    <View style={styles.header}>
     {selectedBoard ? (
      <TouchableOpacity onPress={goBackToBoards} style={styles.burgerButton}>
@@ -402,14 +395,16 @@ export default function BoardsScreen() {
      {selectedBoard ? selectedBoard.title : "Boards"}
     </Text>
 
-    <TouchableOpacity style={styles.notificationButton}>
+    <TouchableOpacity
+     style={styles.notificationButton}
+     onPress={() => router.push("/notifications")}
+    >
      <Ionicons name="notifications-outline" size={24} color="#3a5a40" />
     </TouchableOpacity>
    </View>
 
-   {/* ============ CONTENT: Boards List OR Board Detail ============ */}
+   {}
    {!selectedBoard ? (
-    // ========== BOARDS LIST VIEW ==========
     <ScrollView
      style={styles.scrollView}
      contentContainerStyle={styles.scrollContent}
@@ -462,7 +457,6 @@ export default function BoardsScreen() {
      <View style={{height: 20}} />
     </ScrollView>
    ) : (
-    // ========== BOARD DETAIL VIEW ==========
     <ScrollView
      style={styles.scrollView}
      contentContainerStyle={styles.gridContainer}
@@ -481,7 +475,7 @@ export default function BoardsScreen() {
      </View>
 
      <View style={styles.row}>
-      {/* Left Column */}
+      {}
       <View style={styles.column}>
        {getBoardImages(selectedBoard.id)
         .filter((_: ImageItem, i: number) => i % 2 === 0)
@@ -510,7 +504,7 @@ export default function BoardsScreen() {
         ))}
       </View>
 
-      {/* Right Column */}
+      {}
       <View style={styles.column}>
        {getBoardImages(selectedBoard.id)
         .filter((_: ImageItem, i: number) => i % 2 !== 0)
@@ -542,7 +536,7 @@ export default function BoardsScreen() {
     </ScrollView>
    )}
 
-   {/* ============ SIDEBAR OVERLAY ============ */}
+   {}
    {sidebarVisible && (
     <TouchableOpacity
      style={styles.overlay}
@@ -562,7 +556,7 @@ export default function BoardsScreen() {
     </TouchableOpacity>
    )}
 
-   {/* ============ IMAGE DETAIL MODAL ============ */}
+   {}
    <Modal
     visible={modalVisible}
     animationType="slide"
@@ -580,7 +574,6 @@ export default function BoardsScreen() {
  );
 }
 
-// 📝 Styles
 const styles = StyleSheet.create({
  container: {
   flex: 1,

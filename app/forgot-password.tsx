@@ -62,20 +62,20 @@ export default function ForgotPasswordScreen() {
     style={styles.keyboardView}
    >
     <View style={styles.content}>
-     {/* Icon */}
+     {}
      <View style={styles.iconContainer}>
       <Ionicons name="lock-closed-outline" size={60} color="#3a5a40" />
      </View>
 
-     {/* Title */}
+     {}
      <Text style={styles.title}>Forgot Password?</Text>
 
-     {/* Subtitle */}
+     {}
      <Text style={styles.subtitle}>
       Enter your email address and we'll send you a link to reset your password.
      </Text>
 
-     {/* Success Message */}
+     {}
      {emailSent && (
       <View style={styles.successContainer}>
        <Ionicons name="checkmark-circle" size={20} color="#3a5a40" />
@@ -85,7 +85,7 @@ export default function ForgotPasswordScreen() {
       </View>
      )}
 
-     {/* Email Input */}
+     {}
      <View style={styles.inputContainer}>
       <Ionicons
        name="mail-outline"
@@ -105,7 +105,7 @@ export default function ForgotPasswordScreen() {
       />
      </View>
 
-     {/* Send Reset Link Button */}
+     {}
      <TouchableOpacity
       style={[styles.resetButton, loading && styles.buttonDisabled]}
       onPress={handleResetPassword}
@@ -119,7 +119,7 @@ export default function ForgotPasswordScreen() {
       )}
      </TouchableOpacity>
 
-     {/* Resend option */}
+     {}
      {emailSent && (
       <TouchableOpacity
        style={styles.resendButton}
@@ -132,7 +132,7 @@ export default function ForgotPasswordScreen() {
       </TouchableOpacity>
      )}
 
-     {/* Manual Reset Option (for Expo Go testing) */}
+     {}
      {/* {showTokenInput && (
       <TouchableOpacity
        style={styles.manualResetButton}
@@ -144,7 +144,7 @@ export default function ForgotPasswordScreen() {
       </TouchableOpacity>
      )} */}
 
-     {/* Back to Login */}
+     {}
      <TouchableOpacity
       style={styles.backToLoginButton}
       onPress={() => router.back()}
@@ -172,7 +172,6 @@ const styles = StyleSheet.create({
   paddingTop: 20,
  },
 
- // Back Button
  backButton: {
   width: 40,
   height: 40,
@@ -188,7 +187,6 @@ const styles = StyleSheet.create({
   elevation: 2,
  },
 
- // Icon
  iconContainer: {
   width: 100,
   height: 100,
@@ -200,7 +198,6 @@ const styles = StyleSheet.create({
   marginBottom: 30,
  },
 
- // Text
  title: {
   fontSize: 28,
   fontWeight: "700",
@@ -217,7 +214,6 @@ const styles = StyleSheet.create({
   paddingHorizontal: 10,
  },
 
- // Success Message
  successContainer: {
   flexDirection: "row",
   alignItems: "center",
@@ -234,7 +230,6 @@ const styles = StyleSheet.create({
   fontWeight: "500",
  },
 
- // Input
  inputContainer: {
   flexDirection: "row",
   alignItems: "center",
@@ -255,7 +250,6 @@ const styles = StyleSheet.create({
   color: "#333",
  },
 
- // Reset Button
  resetButton: {
   backgroundColor: "#3a5a40",
   padding: 16,
@@ -277,7 +271,6 @@ const styles = StyleSheet.create({
   opacity: 0.7,
  },
 
- // Resend
  resendButton: {
   alignItems: "center",
   marginTop: 20,
@@ -307,7 +300,6 @@ const styles = StyleSheet.create({
   fontWeight: "500",
  },
 
- // Back to Login
  backToLoginButton: {
   flexDirection: "row",
   alignItems: "center",

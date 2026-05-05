@@ -23,8 +23,8 @@ interface ImageModalProps {
   likes: number;
  };
  onClose: () => void;
- isFavorited?: boolean; // 👈 NEW
- onToggleFavorite?: () => void; // 👈 NEW
+ isFavorited?: boolean;
+ onToggleFavorite?: () => void;
 }
 
 export default function ImageModal({
@@ -34,34 +34,34 @@ export default function ImageModal({
  onToggleFavorite,
 }: ImageModalProps) {
  const [saved, setSaved] = useState(false);
- const [liked, setLiked] = useState(isFavorited); // 👈 Initialize from prop
+ const [liked, setLiked] = useState(isFavorited);
 
  const handleHeartPress = () => {
   if (onToggleFavorite) {
-   onToggleFavorite(); // Remove from favorites in parent
+   onToggleFavorite();
   }
   setLiked(!liked);
  };
 
  return (
   <SafeAreaView style={styles.container}>
-   {/* Close Button */}
-   <TouchableOpacity style={styles.closeButton} onPress={onClose}>
-    <Ionicons name="close" size={28} color="#FFF" />
-   </TouchableOpacity>
+   {}
 
    <ScrollView
     contentContainerStyle={styles.scrollContent}
     showsVerticalScrollIndicator={false}
    >
-    {/* Main Image */}
+    {}
     <Image
      source={{uri: image.url}}
      style={styles.mainImage}
      resizeMode="cover"
     />
 
-    {/* Action Buttons */}
+    <TouchableOpacity style={styles.closeButton} onPress={onClose}>
+     <Ionicons name="close" size={28} color="#FFF" />
+    </TouchableOpacity>
+    {}
     <View style={styles.actionsContainer}>
      <View style={styles.leftActions}>
       <TouchableOpacity style={styles.actionButton} onPress={handleHeartPress}>
@@ -93,10 +93,10 @@ export default function ImageModal({
      </TouchableOpacity>
     </View>
 
-    {/* Likes Count */}
+    {}
     <Text style={styles.likesCount}>{image.likes.toLocaleString()} likes</Text>
 
-    {/* Title & Description */}
+    {}
     <View style={styles.infoContainer}>
      <Text style={styles.imageTitle}>{image.title}</Text>
      <Text style={styles.imageDescription}>{image.description}</Text>
@@ -105,7 +105,7 @@ export default function ImageModal({
      </Text>
     </View>
 
-    {/* Download Button */}
+    {}
     <TouchableOpacity style={styles.downloadButton} activeOpacity={0.8}>
      <Ionicons name="download-outline" size={20} color="#FFF" />
      <Text style={styles.downloadText}>Download</Text>
@@ -114,8 +114,6 @@ export default function ImageModal({
   </SafeAreaView>
  );
 }
-
-// ... styles remain the same as before
 
 const styles = StyleSheet.create({
  container: {
@@ -126,10 +124,9 @@ const styles = StyleSheet.create({
   paddingBottom: 40,
  },
 
- // Close Button
  closeButton: {
   position: "absolute",
-  top: 65,
+  top: 16,
   left: 16,
   zIndex: 10,
   width: 40,
@@ -140,13 +137,11 @@ const styles = StyleSheet.create({
   alignItems: "center",
  },
 
- // Main Image
  mainImage: {
   width: width,
   height: width,
  },
 
- // Actions
  actionsContainer: {
   flexDirection: "row",
   justifyContent: "space-between",
@@ -167,7 +162,6 @@ const styles = StyleSheet.create({
   alignItems: "center",
  },
 
- // Likes
  likesCount: {
   fontSize: 15,
   fontWeight: "600",
@@ -176,7 +170,6 @@ const styles = StyleSheet.create({
   marginBottom: 12,
  },
 
- // Info
  infoContainer: {
   paddingHorizontal: 16,
   marginBottom: 24,
@@ -202,7 +195,6 @@ const styles = StyleSheet.create({
   fontWeight: "600",
  },
 
- // Download Button
  downloadButton: {
   flexDirection: "row",
   alignItems: "center",

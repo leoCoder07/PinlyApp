@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
  contentContainer: {
   flex: 0,
   justifyContent: "space-between",
-  // alignItems: "center",
+
   minHeight: 600,
   paddingBottom: 50,
   paddingHorizontal: 30,
@@ -120,7 +120,7 @@ const styles = StyleSheet.create({
  },
  button: {
   backgroundColor: "#3a5a40",
-  // paddingVertical: 16,
+
   padding: 16,
   borderRadius: 10,
   alignItems: "center",

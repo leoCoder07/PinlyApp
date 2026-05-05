@@ -18,11 +18,10 @@ export default function AuthScreen() {
  const [email, setEmail] = useState("");
  const [password, setPassword] = useState("");
  const [username, setUsername] = useState("");
- const [isLogin, setIsLogin] = useState(false); // Toggle between Login & Sign Up
+ const [isLogin, setIsLogin] = useState(false);
  const [showPassword, setShowPassword] = useState(false);
  const [loading, setLoading] = useState(false);
 
- // 📝 Sign Up Function
  async function signUpWithEmail() {
   if (!email || !password) {
    Alert.alert("Error", "Please fill in email and password");
@@ -31,7 +30,6 @@ export default function AuthScreen() {
 
   setLoading(true);
 
-  // Step 1: Create the user account
   const {data: authData, error: authError} = await supabase.auth.signUp({
    email: email,
    password: password,
@@ -43,12 +41,11 @@ export default function AuthScreen() {
    return;
   }
 
-  // Step 2: Insert into profiles table
   if (authData.user) {
    const {error: profileError} = await supabase.from("profiles").insert([
     {
      id: authData.user.id,
-     username: username || email.split("@")[0], // Use part of email if no username
+     username: username || email.split("@")[0],
      email: email,
     },
    ]);
@@ -65,7 +62,6 @@ export default function AuthScreen() {
   setLoading(false);
  }
 
- // 🔐 Log In Function
  async function signInWithEmail() {
   if (!email || !password) {
    Alert.alert("Error", "Please fill in email and password");
@@ -88,7 +84,6 @@ export default function AuthScreen() {
   setLoading(false);
  }
 
- // 🎯 Handle Continue Button
  async function handleContinue() {
   if (isLogin) {
    await signInWithEmail();
@@ -108,7 +103,7 @@ export default function AuthScreen() {
      showsVerticalScrollIndicator={false}
     >
      <View style={styles.insideContainer}>
-      {/* Title */}
+      {}
       <Text style={styles.title}>{isLogin ? "Log In" : "Sign Up"}</Text>
 
       <View style={styles.inputContainer}>
@@ -129,7 +124,7 @@ export default function AuthScreen() {
        />
       </View>
 
-      {/* Password Input */}
+      {}
       <View style={styles.inputContainer}>
        <Ionicons
         name="lock-closed-outline"
@@ -154,7 +149,7 @@ export default function AuthScreen() {
        </TouchableOpacity>
       </View>
 
-      {/* Username Input (only on Sign Up) */}
+      {}
       {!isLogin && (
        <View style={styles.inputContainer}>
         <Ionicons
@@ -174,7 +169,7 @@ export default function AuthScreen() {
        </View>
       )}
 
-      {/* Continue Button */}
+      {}
       <TouchableOpacity
        style={styles.continueButton}
        onPress={handleContinue}
@@ -183,14 +178,14 @@ export default function AuthScreen() {
        <Text style={styles.continueButtonText}>Continue</Text>
       </TouchableOpacity>
 
-      {/* OR Divider */}
+      {}
       <View style={styles.orContainer}>
        <View style={styles.orLine} />
        <Text style={styles.orText}>OR</Text>
        <View style={styles.orLine} />
       </View>
 
-      {/* Google Button */}
+      {}
       <TouchableOpacity style={styles.socialButton} activeOpacity={0.8}>
        <Ionicons
         name="logo-google"
@@ -201,7 +196,7 @@ export default function AuthScreen() {
        <Text style={styles.socialButtonText}>Continue with Google</Text>
       </TouchableOpacity>
 
-      {/* Facebook Button */}
+      {}
       <TouchableOpacity style={styles.socialButton} activeOpacity={0.8}>
        <Ionicons
         name="logo-facebook"
@@ -212,7 +207,7 @@ export default function AuthScreen() {
        <Text style={styles.socialButtonText}>Continue with Facebook</Text>
       </TouchableOpacity>
 
-      {/* Bottom Links */}
+      {}
       <View style={styles.bottomLinks}>
        <TouchableOpacity onPress={() => router.push("/forgot-password")}>
         <Text style={styles.linkText}>Forgot password?</Text>
@@ -230,7 +225,7 @@ export default function AuthScreen() {
     </ScrollView>
    </KeyboardAvoidingView>
 
-   {/* Bottom Tab Bar */}
+   {}
    {/* <View style={styles.tabBar}>
     <TouchableOpacity style={styles.tabItem}>
      <Ionicons name="home-outline" size={24} color="#888" />
@@ -271,7 +266,7 @@ const styles = StyleSheet.create({
   justifyContent: "center",
  },
  insideContainer: {},
- // Title
+
  title: {
   fontSize: 28,
   fontWeight: "700",
@@ -280,7 +275,6 @@ const styles = StyleSheet.create({
   marginBottom: 40,
  },
 
- // Input Fields
  inputContainer: {
   flexDirection: "row",
   alignItems: "center",
@@ -301,7 +295,6 @@ const styles = StyleSheet.create({
   color: "#333",
  },
 
- // Continue Button
  continueButton: {
   backgroundColor: "#3a5a40",
   padding: 16,
@@ -321,7 +314,6 @@ const styles = StyleSheet.create({
   letterSpacing: 0.5,
  },
 
- // OR Divider
  orContainer: {
   flexDirection: "row",
   alignItems: "center",
@@ -339,7 +331,6 @@ const styles = StyleSheet.create({
   fontWeight: "500",
  },
 
- // Social Buttons
  socialButton: {
   flexDirection: "row",
   alignItems: "center",
@@ -360,7 +351,6 @@ const styles = StyleSheet.create({
   color: "#333",
  },
 
- // Bottom Links
  bottomLinks: {
   alignItems: "center",
   marginTop: 30,
@@ -371,24 +361,4 @@ const styles = StyleSheet.create({
   color: "#3a5a40",
   fontWeight: "500",
  },
-
- // // Tab Bar
- // tabBar: {
- //  flexDirection: "row",
- //  justifyContent: "space-around",
- //  alignItems: "center",
- //  backgroundColor: "#FFFFFF",
- //  paddingVertical: 12,
- //  paddingBottom: 45,
- //  borderTopWidth: 1,
- //  borderTopColor: "#E0E0E0",
- // },
- // tabItem: {
- //  alignItems: "center",
- //  gap: 4,
- // },
- // tabLabel: {
- //  fontSize: 12,
- //  color: "#888",
- // },
 });
